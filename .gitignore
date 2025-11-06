@@ -1,0 +1,118 @@
+# ============================================================
+# 🌐 Proyecto: Finanzas Dentidesk
+# Autor: Sebastian Mella
+# Descripción: Ignora archivos innecesarios o sensibles
+# ============================================================
+
+
+# -------------------------------------------------------------------------
+# 1. DEPENDENCIAS Y DIRECTORIOS DE ENTORNO
+# -------------------------------------------------------------------------
+# PHP / Composer
+/vendor/
+composer.lock
+
+# Node / NPM / React
+/node_modules/
+package-lock.json
+yarn.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# -------------------------------------------------------------------------
+# 2. ARCHIVOS DE CONFIGURACIÓN LOCAL Y VARIABLES DE ENTORNO
+# -------------------------------------------------------------------------
+# Archivos .env (credenciales o configuraciones privadas)
+/.env
+/.env.local
+/.env.development
+/.env.production
+/config/database.local.php
+/config/database.php.backup
+# Archivo de ejemplo permitido
+!/config/database.example.php
+
+# -------------------------------------------------------------------------
+# 3. BASES DE DATOS LOCALES, SESIONES Y CACHES
+# -------------------------------------------------------------------------
+/database/*.db
+/database/*.sqlite
+/tmp/
+/cache/
+/logs/
+/sessions/
+
+# -------------------------------------------------------------------------
+# 4. ARCHIVOS TEMPORALES, LOGS Y BACKUPS
+# -------------------------------------------------------------------------
+# Archivos generados en tiempo de ejecución
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Logs o registros en formato texto
+*.txt
+
+# Archivos comprimidos o backups manuales
+*.zip
+*.rar
+*.tar
+*.gz
+*.7z
+
+# -------------------------------------------------------------------------
+# 5. ENTORNOS DE DESARROLLO / IDE
+# -------------------------------------------------------------------------
+# Visual Studio Code
+.vscode/
+
+# JetBrains IDEs (PHPStorm, WebStorm, etc.)
+.idea/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# -------------------------------------------------------------------------
+# 6. SISTEMAS OPERATIVOS
+# -------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# -------------------------------------------------------------------------
+# 7. DOCKER / DEVOPS
+# -------------------------------------------------------------------------
+# Archivos y directorios de Docker locales
+/docker/.env
+docker-compose.override.yml
+.dockerignore
+
+# -------------------------------------------------------------------------
+# 8. ARCHIVOS DE PRUEBA O DESARROLLO LOCAL
+# -------------------------------------------------------------------------
+test.php
+test_*.php
+sandbox.php
+playground/
+dev_notes.txt
+
+# -------------------------------------------------------------------------
+# 9. BUILD / DIST (Frontend)
+# -------------------------------------------------------------------------
+/frontend/build/
+/frontend/dist/
+/frontend/.cache/
+/frontend/.next/
