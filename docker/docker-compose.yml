@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # --- El servicio de tu App (PHP + Apache) ---
+  app:
+    build: .
+    container_name: dentidesk_app
+    ports:
+      # Expone tu app en http://localhost:8080
+      - "8080:80"
+    volumes:
+      # Sincroniza tu código local con el contenedor
+      - ./backend:/var/www/html/backend
+      - ./frontend:/var/www/html/frontend
+    environment:
+      # Variable para que PHP sepa dónde está la BD
+      DB_HOST: db
+      DB_NAME: finanzas_db
+      DB_USER: root
+      DB_PASS: root_password_seguro
+    depends_on:
+      - db 
+
+  # --- El servicio de la Base de Datos (MySQL) ---
+  db:
+    image: mysql:8.0
+    container_name: dentidesk_db
+    environment:
+      MYSQL_ROOT_PASSWORD: "root_password_seguro" # La contraseña de 'root'
+      MYSQL_DATABASE: "finanzas_db" 
+    volumes:
+      # Carga automáticamente el init.sql al iniciar por primera vez
+      - ./docker/db-init:/docker-entrypoint-initdb.d
+    ports:
+      # (Opcional) Expone la BD en tu PC en el puerto 3307
+      - "3307:3306"
