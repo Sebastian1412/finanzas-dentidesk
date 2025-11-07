@@ -75,6 +75,7 @@ La aplicación se compone de:
 
 - Los endpoints del backend pueden probarse fácilmente mediante Postman o curl.
 - Archivo de prueba: test_transaccion.php permite validar inserciones y consultas básicas.
+- solo las podran ver si descargar el archivo zip, ya que en el repositorio fueron ignorados.
 
 ------------------------------------------------------------
 
@@ -99,8 +100,15 @@ finanzas-dentidesk/
 
 ## Autor
 
-Sebastián Mella  
+Sebastián Pablo Ignacio Mella Silva
 Desarrollador Full Stack – Desafío Técnico DENTIDESK
+Contacto: 
+
+Telefono +56954017603
+Correo: Sebamella1412@gmail.com
+github: https://github.com/Sebastian1412
+linkedin: https://www.linkedin.com/in/sebasti%C3%A1n-pablo-ignacio-mella-silva-36407825a/
+Portafolio Web: https://sebastianmella.page.gd
 
 ------------------------------------------------------------
 

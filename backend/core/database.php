@@ -1,4 +1,5 @@
 <?php
+// database.php
 namespace Core;
 
 use PDO;
