@@ -1,12 +1,8 @@
 // frontend/js/app.js
 
-// 1. URL CORREGIDA - ajusta según tu estructura real
 const API_URL = '../../../backend/api/transaccion.php';
-
-// 2. Token - DEBES CREAR UNO VÁLIDO en tu base de datos
 const TOKEN = 'token_de_prueba_123';
 
-// 3. Funciones auxiliares para API
 async function apiCall(endpoint = '', options = {}) {
     const url = endpoint ? `${API_URL}${endpoint}` : API_URL;
     

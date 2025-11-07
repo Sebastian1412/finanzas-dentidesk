@@ -19,7 +19,7 @@ CREATE TABLE `transacciones` (
   `tipo` enum('ingreso','egreso') NOT NULL,
   `descripcion` varchar(255) NOT NULL,
   `monto` decimal(10,2) NOT NULL,
-  `fecha` date NOT NULL DEFAULT (curdate()), -- <-- ¡CORRECCIÓN APLICADA!
+  `fecha` date NOT NULL DEFAULT curdate(),
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`),
   CONSTRAINT `transacciones_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE
