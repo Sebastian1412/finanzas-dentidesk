@@ -1,17 +1,18 @@
 services:
   app:
     build: .
-    # Se eliminó el texto erróneo "docker-compose..." que estaba aquí.
     container_name: dentidesk_app
     ports:
-      # Expone tu app en http://localhost:8080
+      # Expose your app on http://localhost:8080
       - "8080:80"
     volumes:
-      # Sincroniza tu código local con el contenedor
-      - ./backend:/var/www/html/backend
-      - ./frontend:/var/www/html/frontend
+      # --- CORRECTION ---
+      # This ensures your code is placed in the subfolder
+      # that your app.js and Dockerfile expect.
+      - ./backend:/var/www/html/proyectos/finanzas-dentidesk/backend
+      - ./frontend:/var/www/html/proyectos/finanzas-dentidesk/frontend
     environment:
-      # Variable para que PHP sepa dónde está la BD
+      # Variables for PHP to connect to the DB
       DB_HOST: db
       DB_NAME: finanzas_db
       DB_USER: root
@@ -19,16 +20,16 @@ services:
     depends_on:
       - db 
 
-  # --- El servicio de la Base de Datos (MySQL) ---
+  # --- The Database Service ---
   db:
     image: mysql:8.0
     container_name: dentidesk_db
     environment:
-      MYSQL_ROOT_PASSWORD: "root_password_seguro" # La contraseña de 'root'
+      MYSQL_ROOT_PASSWORD: "root_password_seguro" # 'root' password
       MYSQL_DATABASE: "finanzas_db" 
     volumes:
-      # Carga automáticamente el init.sql al iniciar por primera vez
+      # Automatically loads the init.sql script on first run
       - ./docker/db-init:/docker-entrypoint-initdb.d
     ports:
-      # (Opcional) Expone la BD en tu PC en el puerto 3307
+      # (Optional) Expose the DB to your PC on port 3307
       - "3307:3306"

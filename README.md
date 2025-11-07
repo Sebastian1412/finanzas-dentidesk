@@ -31,7 +31,7 @@ La aplicación se compone de:
 
 3. Una vez completado, la aplicación estará disponible en:
 
-   - Frontend: http://localhost:8080/frontend/publicview/home.php
+   - Frontend: http://localhost:8080/proyectos/finanzas-dentidesk/frontend/public/view/home.php
    - Base de datos: localhost:3307 (puede conectarse con DBeaver o TablePlus).
 
 ### Detener servicios

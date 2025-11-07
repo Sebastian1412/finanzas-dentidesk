@@ -2,10 +2,10 @@
 
 return [
     // --- Valores leídos de docker-compose.yml ---
-    'host'     => getenv('DB_HOST') ?: '127.0.0.1',       // Docker usará 'db', tu PC usará '127.0.0.1'
-    'database' => getenv('DB_NAME') ?: 'finanzas_db', // 'finanzas_db' para ambos
-    'username' => getenv('DB_USER') ?: 'root',          // 'root' para ambos
-    'password' => getenv('DB_PASS') ?: '',              // Docker usará 'root_password_seguro', tu PC usará '' (vacío)
+    'host'     => getenv('DB_HOST') ?: '127.0.0.1',       // Docker: 'db', Local: '127.0.0.1'
+    'database' => getenv('DB_NAME') ?: 'finanzas_db', // Docker: 'finanzas_db', Local: 'finanzas_db'
+    'username' => getenv('DB_USER') ?: 'root',          // Docker: 'root', Local: 'root'
+    'password' => getenv('DB_PASS') ?: '',              // Docker: 'root_password_seguro', Local: ''
 
     // --- Configuración estándar ---
     'port'     => '3306',
