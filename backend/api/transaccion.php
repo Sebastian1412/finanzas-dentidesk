@@ -1,10 +1,29 @@
 <?php
-// controladores/TransaccionController.php
-include_once '../modelos/transaccion.php';
-include_once '../config/database.php';
+// backend/api/transaccion.php
+
+// --- INICIO BLOQUE CORS (¡ESTO ES LO QUE FALTA!) ---
+// Permite que tu frontend (en localhost) se comunique con esta API.
+header("Access-Control-Allow-Origin: *"); // Permite cualquier origen (para pruebas)
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Permite los headers que usas
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS"); // Permite los métodos que usas
+
+// El navegador envía una petición OPTIONS" antes de POST o DELETE.
+// Debemos responder OK a esa petición preliminar.
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+// --- FIN BLOQUE CORS ---
+
+include_once '../models/transaccion.php';
+include_once '../core/database.php';
 include_once '../middlewares/auth.php';
 
+use Core\Database;
+
 header('Content-Type: application/json');
+
+$conn = Database::getConnection();
 
 $method = $_SERVER['REQUEST_METHOD'];
 $usuario_id = auth_middleware($conn); // retorna ID del usuario autenticado
