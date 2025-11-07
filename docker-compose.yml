@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
-  # --- El servicio de tu App (PHP + Apache) ---
   app:
     build: .
+    # Se eliminó el texto erróneo "docker-compose..." que estaba aquí.
     container_name: dentidesk_app
     ports:
       # Expone tu app en http://localhost:8080
