@@ -11,7 +11,7 @@
     <div class="container py-5">
         <h1 class="mb-4 text-center">Mantenedor de Finanzas</h1>
 
-        <!-- 1. Sección de Totales (Se rellena con app.js) -->
+        <!-- Sección de Totales (Se rellena con app.js) -->
         <div class="row mb-4 text-center" id="totales-section">
             <div class="col-md-4">
                 <div class="card text-white bg-success mb-3">
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <!-- 2. Formulario de Transacción -->
+        <!-- Formulario de Transacción -->
         <div class="card mb-4">
             <div class="card-header">Registrar Nueva Transacción</div>
             <div class="card-body">
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <!-- 3. Tabla de Transacciones Recientes (Se rellena con app.js) -->
+        <!-- estos datos cargar atravez del Js -->
         <div class="card">
             <div class="card-header">Últimas Transacciones</div>
             <div class="card-body">
@@ -84,7 +84,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Las filas se insertarán aquí desde js/app.js -->
+                            <!-- Estos datos cargan gracias al js -->
                             <tr>
                                 <td colspan="5" class="text-center p-4">Cargando datos...</td>
                             </tr>
@@ -94,7 +94,7 @@
             </div>
         </div>
 
-    </div> <!-- Fin .container -->
+    </div>
 
     <!-- JS de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
