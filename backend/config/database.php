@@ -1,5 +1,8 @@
 <?php
 
+// Este archivo lee las variables de entorno de Docker
+// o usa los valores por defecto para tu XAMPP local.
+
 return [
     // --- Valores leídos de docker-compose.yml ---
     'host'     => getenv('DB_HOST') ?: '127.0.0.1',       // Docker: 'db', Local: '127.0.0.1'

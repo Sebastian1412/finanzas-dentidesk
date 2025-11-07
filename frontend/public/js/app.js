@@ -1,7 +1,7 @@
 // frontend/js/app.js
 
 // 1. URL CORREGIDA - ajusta según tu estructura real
-const API_URL = 'http://localhost/proyectos/finanzas-dentidesk/backend/api/transaccion.php';
+const API_URL = '../../../backend/api/transaccion.php';
 
 // 2. Token - DEBES CREAR UNO VÁLIDO en tu base de datos
 const TOKEN = 'token_de_prueba_123';
