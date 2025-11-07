@@ -1,19 +1,14 @@
 <?php
 // backend/api/transaccion.php
 
-// --- INICIO BLOQUE CORS (¡ESTO ES LO QUE FALTA!) ---
-// Permite que tu frontend (en localhost) se comunique con esta API.
-header("Access-Control-Allow-Origin: *"); // Permite cualquier origen (para pruebas)
-header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Permite los headers que usas
-header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS"); // Permite los métodos que usas
+header("Access-Control-Allow-Origin: *"); 
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); 
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS"); 
 
-// El navegador envía una petición OPTIONS" antes de POST o DELETE.
-// Debemos responder OK a esa petición preliminar.
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
-// --- FIN BLOQUE CORS ---
 
 include_once '../models/transaccion.php';
 include_once '../core/database.php';

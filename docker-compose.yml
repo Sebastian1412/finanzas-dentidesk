@@ -7,7 +7,6 @@ services:
       # Expone tu app en http://localhost:8080
       - "8080:80"
     volumes:
-      # --- CORRECCIÓN DE RUTA DE LA APP ---
       # Sincroniza tus carpetas locales con la ruta exacta
       # que tu app.js y Dockerfile esperan dentro del contenedor.
       - ./backend:/var/www/html/proyectos/finanzas-dentidesk/backend
@@ -19,7 +18,7 @@ services:
       DB_USER: "root"
       DB_PASS: "root_password_seguro"
     depends_on:
-      - db # No arranques la app hasta que la BD esté lista
+      - db 
 
   # --- El servicio de la Base de Datos (MySQL) ---
   db:
@@ -29,8 +28,7 @@ services:
       MYSQL_ROOT_PASSWORD: "root_password_seguro"
       MYSQL_DATABASE: "finanzas_db"
     volumes:
-      # --- CORRECCIÓN DE RUTA DEL SQL ---
-      # Apunta a la carpeta real donde está tu archivo finanzas_db.sql
+      # Ubicacion de el script de base de datos
       - ./backend/database:/docker-entrypoint-initdb.d
     ports:
       # (Opcional) Expone la BD en tu PC en el puerto 3307
