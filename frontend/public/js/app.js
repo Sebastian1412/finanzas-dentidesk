@@ -3,6 +3,8 @@
 const API_URL = '../../../backend/api/transaccion.php';
 const TOKEN = 'token_de_prueba_123';
 
+let dataTableInstance = null;
+
 async function apiCall(endpoint = '', options = {}) {
     const url = endpoint ? `${API_URL}${endpoint}` : API_URL;
     
@@ -15,11 +17,7 @@ async function apiCall(endpoint = '', options = {}) {
 
     try {
         const response = await fetch(url, { ...defaultOptions, ...options });
-        
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-        }
-        
+        if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
         return await response.json();
     } catch (error) {
         console.error('Error en API call:', error);
@@ -27,25 +25,20 @@ async function apiCall(endpoint = '', options = {}) {
     }
 }
 
-// 4. Cargar datos iniciales
 async function cargarDatos() {
     try {
-        // Cargar totales
         const totales = await apiCall('?totales=true');
         actualizarTotales(totales);
         
-        // Cargar transacciones
         const transacciones = await apiCall();
         actualizarTabla(transacciones);
         
     } catch (error) {
         console.error('Error cargando datos:', error);
-        document.querySelector('#tabla-transacciones tbody').innerHTML = 
-            '<tr><td colspan="5" class="text-center text-danger">Error cargando datos</td></tr>';
+        alert('Error cargando datos de la tabla');
     }
 }
 
-// 5. Actualizar los totales en el HTML
 function actualizarTotales(totales) {
     const ingresos = parseFloat(totales.total_ingresos || 0);
     const egresos = parseFloat(totales.total_egresos || 0);
@@ -55,49 +48,76 @@ function actualizarTotales(totales) {
     document.getElementById('total-egresos').textContent = `$${egresos.toFixed(2)}`;
     document.getElementById('ganancia-neta').textContent = `$${gananciaNeta.toFixed(2)}`;
     
-    // Color para ganancia neta
     const gananciaElement = document.getElementById('ganancia-neta').parentElement.parentElement;
     gananciaElement.className = gananciaNeta >= 0 ? 
         'card text-white bg-primary mb-3' : 'card text-white bg-warning mb-3';
 }
 
-// 6. Actualizar tabla de transacciones
 function actualizarTabla(transacciones) {
-    const tbody = document.querySelector('#tabla-transacciones tbody');
-    
+    if ($.fn.DataTable.isDataTable('#tabla-transacciones')) {
+        $('#tabla-transacciones').DataTable().destroy();
+    }
+
     if (!transacciones || transacciones.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="text-center">No hay transacciones</td></tr>';
+        // Si no hay datos, inicializamos una tabla vacía
+        $('#tabla-transacciones').DataTable({ data: [] });
         return;
     }
 
-    tbody.innerHTML = transacciones.map(trans => `
-        <tr>
-            <td>${formatearFecha(trans.fecha)}</td>
-            <td>
-                <span class="badge ${trans.tipo === 'ingreso' ? 'bg-success' : 'bg-danger'}">
-                    ${trans.tipo}
-                </span>
-            </td>
-            <td>${trans.descripcion || '-'}</td>
-            <td class="text-end ${trans.tipo === 'ingreso' ? 'text-success' : 'text-danger'}">
-                $${parseFloat(trans.monto).toFixed(2)}
-            </td>
-            <td class="text-center">
-                <button class="btn btn-sm btn-outline-danger" onclick="eliminarTransaccion(${trans.id})">
-                    Eliminar
-                </button>
-            </td>
-        </tr>
-    `).join('');
+    // Inicializamos DataTables
+    dataTableInstance = $('#tabla-transacciones').DataTable({
+        data: transacciones, 
+        columns: [
+            { 
+                data: 'fecha',
+                render: function(data) { return formatearFecha(data); } 
+            },
+            { 
+                data: 'tipo',
+                render: function(data) {
+                    const color = data === 'ingreso' ? 'success' : 'danger';
+                    return `<span class="badge bg-${color}">${data}</span>`;
+                }
+            },
+            { data: 'descripcion' },
+            { 
+                data: 'monto',
+                className: 'text-end', // Alinear a la derecha (Bootstrap class)
+                render: function(data, type, row) {
+                    const color = row.tipo === 'ingreso' ? 'text-success' : 'text-danger';
+                    return `<span class="${color}">$${parseFloat(data).toFixed(2)}</span>`;
+                }
+            },
+            { 
+                data: null, // Columna de acciones (no viene de la BD)
+                className: 'text-center',
+                orderable: false, // No ordenar por esta columna
+                render: function(data, type, row) {
+                    return `<button class="btn btn-sm btn-outline-danger" onclick="eliminarTransaccion(${row.id})">Eliminar</button>`;
+                }
+            }
+        ],
+
+        dom: 'Bfrtip', 
+        buttons: [
+            { extend: 'excel', text: 'Exportar Excel', className: 'btn btn-success btn-sm' },
+            { extend: 'pdf', text: 'PDF', className: 'btn btn-danger btn-sm' },
+            { extend: 'print', text: 'Imprimir', className: 'btn btn-secondary btn-sm' }
+        ],
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+        },
+        order: [[0, 'desc']]
+    });
 }
 
-// 7. Formatear fecha
 function formatearFecha(fechaString) {
-    const fecha = new Date(fechaString);
-    return fecha.toLocaleDateString('es-ES');
+    if (!fechaString) return '';
+    const partes = fechaString.split('-');
+    if (partes.length !== 3) return fechaString;
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
 }
 
-// 8. Manejar envío del formulario
 document.getElementById('transaccion-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -114,14 +134,9 @@ document.getElementById('transaccion-form').addEventListener('submit', async fun
         });
 
         if (resultado.success) {
-            // Limpiar formulario
             this.reset();
-            document.getElementById('tipo').value = 'ingreso'; // Reset a valor por defecto
-            
-            // Recargar datos
-            await cargarDatos();
-            
-            // Mostrar mensaje de éxito
+            document.getElementById('tipo').value = 'ingreso';
+            await cargarDatos(); 
             alert('Transacción guardada correctamente');
         } else {
             alert('Error al guardar transacción');
@@ -132,19 +147,14 @@ document.getElementById('transaccion-form').addEventListener('submit', async fun
     }
 });
 
-// 9. Eliminar transacción
 async function eliminarTransaccion(id) {
-    if (!confirm('¿Estás seguro de eliminar esta transacción?')) {
-        return;
-    }
+    if (!confirm('¿Estás seguro de eliminar esta transacción?')) return;
 
     try {
-        const resultado = await apiCall(`?id=${id}`, {
-            method: 'DELETE'
-        });
+        const resultado = await apiCall(`?id=${id}`, { method: 'DELETE' });
 
         if (resultado.success) {
-            await cargarDatos();
+            await cargarDatos(); 
             alert('Transacción eliminada');
         } else {
             alert('Error al eliminar transacción');
@@ -155,7 +165,6 @@ async function eliminarTransaccion(id) {
     }
 }
 
-// 10. Inicializar la aplicación cuando carga la página
 document.addEventListener('DOMContentLoaded', function() {
     cargarDatos();
 });

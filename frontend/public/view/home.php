@@ -1,17 +1,21 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanzas DENTIDESK</title>
-    <!-- Bootstrap CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
+
 </head>
 <body class="bg-light">
 
     <div class="container py-5">
         <h1 class="mb-4 text-center">Mantenedor de Finanzas</h1>
 
-        <!-- Sección de Totales (Se rellena con app.js) -->
+
         <div class="row mb-4 text-center" id="totales-section">
             <div class="col-md-4">
                 <div class="card text-white bg-success mb-3">
@@ -39,7 +43,7 @@
             </div>
         </div>
 
-        <!-- Formulario de Transacción -->
+
         <div class="card mb-4">
             <div class="card-header">Registrar Nueva Transacción</div>
             <div class="card-body">
@@ -68,12 +72,11 @@
             </div>
         </div>
 
-        <!-- estos datos cargar atravez del Js -->
         <div class="card">
             <div class="card-header">Últimas Transacciones</div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped align-middle" id="tabla-transacciones">
+                    <table class="table table-striped align-middle" id="tabla-transacciones" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -84,7 +87,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Estos datos cargan gracias al js -->
+
                             <tr>
                                 <td colspan="5" class="text-center p-4">Cargando datos...</td>
                             </tr>
@@ -96,8 +99,24 @@
 
     </div>
 
-    <!-- JS de Bootstrap -->
+    <!-- jQuery (Obligatorio para DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    
+    <!-- JS de Bootstrap (Ya lo tenías) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JS de DataTables -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    
     <script src="../js/app.js"></script>
 </body>
 </html>
