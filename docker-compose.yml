@@ -7,8 +7,6 @@ services:
       # Expone tu app en http://localhost:8080
       - "8080:80"
     volumes:
-      # Sincroniza tus carpetas locales con la ruta exacta
-      # que tu app.js y Dockerfile esperan dentro del contenedor.
       - ./backend:/var/www/html/proyectos/finanzas-dentidesk/backend
       - ./frontend:/var/www/html/proyectos/finanzas-dentidesk/frontend
     environment:
